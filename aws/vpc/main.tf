@@ -6,7 +6,6 @@ module "vpc_base" {
   region             = var.region
   instance_tenancy   = var.instance_tenancy
   cidr_block         = var.cidr_block
-  //availability_zones = local.availability_zones
   public_subnets     = var.public_subnets
   private_subnets    = var.private_subnets
   multiple_nat       = var.multiple_nat

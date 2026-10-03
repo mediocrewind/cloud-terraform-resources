@@ -7,7 +7,7 @@ output "vpc_region" {
   value = var.region
 }
 output "vpc_cidr_block_output" {
-  value = aws_vpc.vpc_net.cidr_block
+  value = aws_vpc.vpc.cidr_block
 }
 output "vpc_availability_zones_output" {
   value = local.availability_zones

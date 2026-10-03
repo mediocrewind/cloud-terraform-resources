@@ -35,7 +35,7 @@ module "vpc_nat_ec2" {
 module "vpc_nat_gateway" {
   count  = var.nat_gateway ? 1 : 0
   source = "./modules/vpc-nat-gw"
-  resource_name =         var.resource_name
+  resource_name           = var.resource_name
   vpc_id                  = module.vpc_base.vpc_id_output
   private_subnets         = var.private_subnets
   vpc_ngw_subnet_ids      = module.vpc_base.vpc_pub_sub_output

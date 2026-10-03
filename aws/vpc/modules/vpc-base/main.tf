@@ -37,7 +37,7 @@ resource "aws_internet_gateway" "vpc_igw" {
     var.tags
   )
   depends_on = [
-    aws_vpc.vpc_net
+    aws_vpc.vpc
   ]
 }
 
@@ -45,7 +45,7 @@ resource "aws_internet_gateway" "vpc_igw" {
 // vpc public-subnets
 resource "aws_subnet" "vpc_pub_sub" {
   count                   = length(var.public_subnets)
-  vpc_id                  = element(aws_vpc.vpc_net.*.id, count.index)
+  vpc_id                  = element(aws_vpc.vpc.*.id, count.index)
   cidr_block              = element(var.public_subnets, count.index)
   availability_zone       = element(local.availability_zones, count.index)
   map_public_ip_on_launch = true
@@ -56,7 +56,7 @@ resource "aws_subnet" "vpc_pub_sub" {
     var.tags
   )
   depends_on = [
-    aws_vpc.vpc_net
+    aws_vpc.vpc
   ]
 }
 
@@ -64,7 +64,7 @@ resource "aws_subnet" "vpc_pub_sub" {
 // vpc private-subnets
 resource "aws_subnet" "vpc_pri_sub" {
   count                   = length(var.private_subnets)
-  vpc_id                  = element(aws_vpc.vpc_net.*.id, count.index)
+  vpc_id                  = element(aws_vpc.vpc.*.id, count.index)
   cidr_block              = element(var.private_subnets, count.index)
   availability_zone       = element(local.availability_zones, count.index)
   map_public_ip_on_launch = false
@@ -75,14 +75,14 @@ resource "aws_subnet" "vpc_pri_sub" {
     var.tags
   )
   depends_on = [
-    aws_vpc.vpc_net
+    aws_vpc.vpc
   ]
 }
 
 // ---------------------------------------------------------------------------------------------------------
 // vpc public route table
 resource "aws_route_table" "vpc_pub_rt" {
-  vpc_id = aws_vpc.vpc_net.id
+  vpc_id = aws_vpc.vpc.id
   // public subnets connection to internet via internet-gateway
   route { 
     cidr_block = "0.0.0.0/0"
@@ -95,7 +95,7 @@ resource "aws_route_table" "vpc_pub_rt" {
     var.tags
   )
   depends_on = [
-    aws_vpc.vpc_net,
+    aws_vpc.vpc,
     aws_internet_gateway.vpc_igw,
     aws_subnet.vpc_pub_sub,
     aws_subnet.vpc_pri_sub
@@ -117,7 +117,7 @@ resource "aws_route_table_association" "vpc_pub_rt_sub_asc" {
 // aws vpc private route table
 resource "aws_route_table" "vpc_pri_rt" {
   count  = var.multiple_nat != true ? 1 : length(var.private_subnets)
-  vpc_id = aws_vpc.vpc_net.id
+  vpc_id = aws_vpc.vpc.id
   tags = merge(
     {
       Name = "${var.resource_name}-private-route"
@@ -125,7 +125,7 @@ resource "aws_route_table" "vpc_pri_rt" {
     var.tags
   )
   depends_on = [
-    aws_vpc.vpc_net,
+    aws_vpc.vpc,
     aws_subnet.vpc_pri_sub
   ] 
 }

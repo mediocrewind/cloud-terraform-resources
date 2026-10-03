@@ -9,7 +9,7 @@ module "vpc_base" {
   public_subnets     = var.public_subnets
   private_subnets    = var.private_subnets
   multiple_nat       = var.multiple_nat
-  tags               = var.resource_tag
+  tags               = var.resource_tags
 }
 
 // ---------------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ module "vpc_nat_ec2" {
   multiple_nat            = var.multiple_nat
   nat_ec2_subnet_ids      = module.vpc_base.vpc_pub_sub_output
   vpc_private_route_table = module.vpc_base.vpc_pri_rt_output
-  tags                    = var.resource_tag
+  tags                    = var.resource_tags
   depends_on = [
     module.vpc_base
   ]
@@ -41,7 +41,7 @@ module "vpc_nat_gateway" {
   vpc_ngw_subnet_ids      = module.vpc_base.vpc_pub_sub_output
   vpc_private_route_table = module.vpc_base.vpc_pri_rt_output
   multiple_nat            = var.multiple_nat
-  tags                    = var.resource_tag 
+  tags                    = var.resource_tags
   depends_on = [
     module.vpc_base
   ]

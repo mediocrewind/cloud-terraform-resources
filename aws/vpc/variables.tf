@@ -3,7 +3,7 @@ variable "resource_name" {
   default = "resource"
 }
 
-variable "resource_tag" {
+variable "resource_tags" {
   type    = map(string)
   default = {}
 }

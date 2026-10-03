@@ -18,7 +18,7 @@ variable "instance_tenancy" {
 }
 
 variable "cidr_block" {
-  type = list
+  type = string
 }
 
 variable "public_subnets" {

@@ -22,9 +22,7 @@ resource "aws_iam_role" "this" {
     var.resource_tags
   )
 }
-output "ec2_launch_template_iam_role_output" {
-  value = try(aws_iam_role.this[0].name, null)
-}
+
 // aws ec2 iam-policy attached policies
 resource "aws_iam_role_policy_attachment" "vpc_nat_ec2_instance_role_AmazonSSMManagedInstanceCore" {
   count      = var.default_iam_role ? 1 : 0 
@@ -64,9 +62,6 @@ resource "aws_security_group" "this" {
     },
     var.resource_tags
   )
-}
-output "ec2_launch_template_sg_output" {
-  value = try(aws_security_group.this[0].id, null)
 }
 
 // ---------------------------------------------------------------------------------------------------------
@@ -131,13 +126,4 @@ resource "aws_launch_template" "this" {
   instance_initiated_shutdown_behavior = var.launch_template_instance_initiated_shutdown_behavior
   disable_api_termination              = var.launch_template_disable_api_termination
   user_data                            = var.launch_template_user_data
-}
-output "ec2_launch_template_id_output" {
-  value = aws_launch_template.this.id
-}
-output "ec2_launch_template_arn_output" {
-  value = aws_launch_template.this.arn
-}
-output "ec2_launch_template_name_output" {
-  value = aws_launch_template.this.name
 }

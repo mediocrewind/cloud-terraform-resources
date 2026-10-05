@@ -6,9 +6,9 @@ module "aws_security_group" {
   resource_tags = merge(
     var.resource_tags,
     {
-      product = my-product
+      product = var.product_name
     })
-  vpc_id = vpc-id
+  vpc_id = var.vpc_id
   ingress_rules = [
     {
       security_group_description = "accept http traffic from internet"

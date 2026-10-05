@@ -45,26 +45,6 @@ resource "aws_iam_instance_profile" "this" {
 }
 
 // ---------------------------------------------------------------------------------------------------------
-//security-group
-resource "aws_security_group" "this" {
-  count = var.default_security_group ? 1 : 0 
-  name   = "${var.resource_name}-sg"  
-  vpc_id = var.vpc_id
-  egress {
-    protocol    = "all"
-    from_port   = 0
-    to_port     = 0    
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  tags = merge(
-    {
-      Name = "${var.resource_name}-sg"
-    },
-    var.resource_tags
-  )
-}
-
-// ---------------------------------------------------------------------------------------------------------
 // ec2 launch-template
 resource "tls_private_key" "this" {
   count     = var.default_key_pair ? 1 : 0
@@ -86,8 +66,8 @@ resource "aws_launch_template" "this" {
     content {
       device_index                = network_interfaces.key
       associate_public_ip_address = network_interfaces.value.launch_template_associate_public_ip_address
-      subnet_id                   = network_interfaces.value.launch_template_subnet_id != null ? network_interfaces.value.launch_template_subnet_id : null
-      security_groups             = network_interfaces.value.launch_template_security_groups != null ? network_interfaces.value.launch_template_security_groups : var.default_security_group == true ? [aws_security_group.this[0].id] : null
+      subnet_id                   = network_interfaces.value.launch_template_subnet_id
+      security_groups             = network_interfaces.value.launch_template_security_groups
     }
   }
   dynamic "block_device_mappings" {

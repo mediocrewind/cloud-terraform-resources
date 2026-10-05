@@ -3,10 +3,6 @@ variable "default_iam_instance_profile" {
   default = false
 }
 
-variable "default_security_group" {
-  type    = bool
-  default = false  
-}
 variable "default_key_pair" {
   type    = bool
   default = false
@@ -20,11 +16,6 @@ variable "resource_name" {
 variable "resource_tags" {
   type    = map(string)
   default = {}
-}
-
-variable "vpc_id" {
-  type    = string
-  default = null
 }
 
 variable "launch_template_image_id" {

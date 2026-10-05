@@ -66,8 +66,7 @@ variable "launch_template_iam_instance_profile" {
   type = string
 }
 variable "launch_template_instance_initiated_shutdown_behavior" {
-  type    = string
-  default = stop
+  default = null
 }
 
 variable "launch_template_disable_api_termination" {

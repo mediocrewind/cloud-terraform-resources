@@ -7,6 +7,10 @@ variable "default_security_group" {
   type    = bool
   default = false  
 }
+variable "default_key_pair" {
+  type = bool
+  default = false
+}
 
 variable "resource_name" {
   type    = string

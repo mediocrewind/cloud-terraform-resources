@@ -67,12 +67,12 @@ resource "aws_security_group" "this" {
 // ---------------------------------------------------------------------------------------------------------
 // ec2 launch-template
 resource "tls_private_key" "this" {
-  count     = length(var.launch_template_key_name) > 0 ? 0 : 1
+  count     = var.default_key_pair ? 1 : 0
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 resource "aws_key_pair" "this" {
-  count      = length(var.launch_template_key_name) > 0 ? 0 : 1
+  count      = var.default_key_pair ? 1 : 0
   key_name   = "${var.resource_name}-kp"
   public_key = tls_private_key.this[count.index].public_key_openssh
 }

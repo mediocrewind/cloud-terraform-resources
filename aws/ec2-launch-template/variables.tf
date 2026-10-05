@@ -1,3 +1,13 @@
+variable "default_iam_role" {
+  type    = bool
+  default = false
+}
+
+variable "default_security_group" {
+  type    = bool
+  default = false  
+}
+
 variable "resource_name" {
   type    = string
   default = "resource"

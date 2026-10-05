@@ -1,4 +1,5 @@
 # module call sample template
+```
 module "aws_security_group" {
   source = "git::https://github.com/mediocrewind/cloud-terraform-resources.git//aws/vpc-security-group"
   resource_name = "resource-security-group-name"
@@ -37,3 +38,4 @@ module "aws_security_group" {
 output "aws_security_group" {
   value = module.aws_security_group
 }
+```

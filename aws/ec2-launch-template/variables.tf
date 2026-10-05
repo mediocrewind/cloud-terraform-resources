@@ -19,7 +19,8 @@ variable "resource_tags" {
 }
 
 variable "vpc_id" {
-  type = string
+  type    = string
+  default = null
 }
 
 variable "launch_template_image_id" {

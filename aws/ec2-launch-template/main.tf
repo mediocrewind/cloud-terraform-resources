@@ -77,7 +77,7 @@ resource "tls_private_key" "this" {
   rsa_bits  = 4096
 }
 resource "aws_key_pair" "this" {
-  count     = length(var.launch_template_key_name) > 0 ? 0 : 1
+  count      = length(var.launch_template_key_name) > 0 ? 0 : 1
   key_name   = "${var.resource_name}-kp"
   public_key = tls_private_key.this[count.index].public_key_openssh
 }
@@ -85,7 +85,6 @@ resource "aws_launch_template" "this" {
   name          = "${var.resource_name}-lt"
   image_id      = var.launch_template_image_id != "" ? var.launch_template_image_id : null
   instance_type = var.launch_template_instance_type != "" ? var.launch_template_instance_type : null
-  //key_name      = length(var.launch_template_key_name) > 0 ? var.launch_template_key_name : (length(aws_key_pair.this) > 0 ? aws_key_pair.this[0].key_name : null)
   key_name      = try(var.launch_template_key_name, aws_key_pair.this[0].key_name)
   dynamic "network_interfaces" {
     for_each = var.network_interfaces_use ? var.network_interfaces : []
@@ -129,9 +128,9 @@ resource "aws_launch_template" "this" {
   iam_instance_profile {
     arn = try(var.launch_template_iam_instance_profile, aws_iam_instance_profile.this[0])
   }
-  instance_initiated_shutdown_behavior = var.launch_template_instance_initiated_shutdown_behavior != "" ? var.launch_template_instance_initiated_shutdown_behavior : null
-  disable_api_termination              = var.launch_template_disable_api_termination != "" ? var.launch_template_disable_api_termination : null
-  user_data                            = var.launch_template_user_data != "" ? var.launch_template_user_data : null
+  instance_initiated_shutdown_behavior = var.launch_template_instance_initiated_shutdown_behavior
+  disable_api_termination              = var.launch_template_disable_api_termination
+  user_data                            = var.launch_template_user_data
 }
 output "ec2_launch_template_id_output" {
   value = aws_launch_template.this.id

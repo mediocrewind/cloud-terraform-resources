@@ -27,9 +27,12 @@ variable "launch_template_image_id" {
 }
 
 variable "launch_template_instance_type" {
+  type    = string
+  default = "t3.micro"
+}
+variable "launch_template_key_name" {
   type = string
 }
-variable "launch_template_key_name" {}
 
 variable "network_interfaces_use" {
   type    = bool
@@ -62,8 +65,16 @@ variable "block_device_mappings" {
 variable "launch_template_iam_instance_profile" {
   type = string
 }
-variable "launch_template_instance_initiated_shutdown_behavior" {}
+variable "launch_template_instance_initiated_shutdown_behavior" {
+  type    = string
+  default = stop
+}
 
-variable "launch_template_disable_api_termination" {}
+variable "launch_template_disable_api_termination" {
+  type    = bool
+  default = false
+}
 
-variable "launch_template_user_data" {}
+variable "launch_template_user_data" {
+  default = null
+}

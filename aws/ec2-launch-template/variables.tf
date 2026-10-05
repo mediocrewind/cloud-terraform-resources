@@ -8,7 +8,7 @@ variable "default_security_group" {
   default = false  
 }
 variable "default_key_pair" {
-  type = bool
+  type    = bool
   default = false
 }
 
@@ -28,7 +28,9 @@ variable "vpc_id" {
 }
 
 variable "launch_template_image_id" {
-  type = string    
+  type    = string
+  default = null
+
 }
 
 variable "launch_template_instance_type" {

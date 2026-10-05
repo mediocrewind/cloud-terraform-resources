@@ -78,16 +78,16 @@ resource "aws_key_pair" "this" {
 }
 resource "aws_launch_template" "this" {
   name          = "${var.resource_name}-lt"
-  image_id      = var.launch_template_image_id != "" ? var.launch_template_image_id : null
-  instance_type = var.launch_template_instance_type != "" ? var.launch_template_instance_type : null
+  image_id      = var.launch_template_image_id
+  instance_type = var.launch_template_instance_type
   key_name      = try(var.launch_template_key_pair, aws_key_pair.this[0].key_name)
   dynamic "network_interfaces" {
     for_each = var.network_interfaces_use ? var.network_interfaces : []
     content {
       device_index                = network_interfaces.key
       associate_public_ip_address = network_interfaces.value.launch_template_associate_public_ip_address
-      subnet_id                   = network_interfaces.value.launch_template_subnet_id != "" ? network_interfaces.value.launch_template_subnet_id : null
-      security_groups             = try(network_interfaces.value.launch_template_security_groups, aws_security_group.this[0].id)
+      subnet_id                   = network_interfaces.value.launch_template_subnet_id != null ? network_interfaces.value.launch_template_subnet_id : null
+      security_groups             = network_interfaces.value.launch_template_security_groups != null ? network_interfaces.value.launch_template_security_groups : var.default_security_group == true ? [aws_security_group.this[0].id] : null
     }
   }
   dynamic "block_device_mappings" {

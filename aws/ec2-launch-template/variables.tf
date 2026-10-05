@@ -62,7 +62,8 @@ variable "block_device_mappings" {
 }
 
 variable "launch_template_iam_instance_profile" {
-  type = string
+  type    = string
+  default = null
 }
 variable "launch_template_instance_initiated_shutdown_behavior" {
   default = null

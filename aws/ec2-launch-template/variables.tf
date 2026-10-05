@@ -22,10 +22,6 @@ variable "vpc_id" {
   type = string
 }
 
-variable "vpc_cidr_block" {
-  type = string
-}
-
 variable "launch_template_image_id" {
   type = string    
 }

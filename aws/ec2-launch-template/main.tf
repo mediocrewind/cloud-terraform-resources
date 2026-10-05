@@ -80,7 +80,7 @@ resource "aws_launch_template" "this" {
   name          = "${var.resource_name}-lt"
   image_id      = var.launch_template_image_id != "" ? var.launch_template_image_id : null
   instance_type = var.launch_template_instance_type != "" ? var.launch_template_instance_type : null
-  key_name      = try(var.launch_template_key_name, aws_key_pair.this[0].key_name)
+  key_name      = try(var.launch_template_key_pair, aws_key_pair.this[0].key_name)
   dynamic "network_interfaces" {
     for_each = var.network_interfaces_use ? var.network_interfaces : []
     content {

@@ -35,8 +35,9 @@ variable "launch_template_instance_type" {
   type    = string
   default = "t3.micro"
 }
-variable "launch_template_key_name" {
-  type = string
+variable "launch_template_key_pair" {
+  type    = string
+  default = null
 }
 
 variable "network_interfaces_use" {

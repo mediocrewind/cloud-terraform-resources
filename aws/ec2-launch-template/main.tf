@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------
 // ec2 launch-template instance role
 resource "aws_iam_role" "this" {
-  count = var.default_iam_role ? 1 : 0
+  count = var.default_iam_instance_profile ? 1 : 0
   name  = "${var.resource_name}-ec2-instance-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -25,7 +25,7 @@ resource "aws_iam_role" "this" {
 
 // aws ec2 iam-policy attached policies
 resource "aws_iam_role_policy_attachment" "vpc_nat_ec2_instance_role_AmazonSSMManagedInstanceCore" {
-  count      = var.default_iam_role ? 1 : 0 
+  count      = var.default_iam_instance_profile ? 1 : 0 
   role       = aws_iam_role.this[0].name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"   
 }
@@ -33,7 +33,7 @@ resource "aws_iam_role_policy_attachment" "vpc_nat_ec2_instance_role_AmazonSSMMa
 // ---------------------------------------------------------------------------------------------------------
 // aws ec2 nat instance-profile
 resource "aws_iam_instance_profile" "this" {
-  count = var.default_iam_role ? 1 : 0  
+  count = var.default_iam_instance_profile ? 1 : 0  
   name  = "${var.resource_name}-ec2-instance-role"
   role  = aws_iam_role.this[0].name
   tags  = merge(

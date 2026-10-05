@@ -1,4 +1,4 @@
-variable "default_iam_role" {
+variable "default_iam_instance_profile" {
   type    = bool
   default = false
 }

@@ -2,29 +2,40 @@
 ```
 module "ec2_launch_template" {
   source = "git::https://github.com/mediocrewind/cloud-terraform-resources.git//aws/ec2-launch-template"
-  resource_name = "${local.config.details.resource_name}-${terraform.workspace == "production" ? "prd" : "env"}"
+  resource_name = "${var.resource_name}-${terraform.workspace == "production" ? "production" : "development"}"
   resource_tags = merge(
     local.config.details.resource_tags,
     {
       // place additional tags here if required
     })
-  default_iam_role              = true
-  //default_security_group        = true
-  //vpc_id                        = data.terraform_remote_state.network.outputs.vpc_base.vpc_base.vpc_id_output
-  launch_template_image_id      = ""
-  launch_template_instance_type = ""
-  launch_template_key_name      = "" # set value if required; keep blank if you want module to create key-pair
+
+  // ----------------------------------------------------
+  // instance profile setting
+  // set to true if desired to use module instance-profile
+  default_iam_role = false                                    // set to true to choose using module's instance-profile creation
+  launch_template_iam_instance_profile = var.instance_profile // include to use existing iam-instance-profile
+
+  // ----------------------------------------------------
+  // key pair setting
+  default_key_pair              = false        // set to true to choose using module's key-pair creation
+  launch_template_key_pair      = var.key_pair // include to use existing key-pair
+  launch_template_image_id      = var.launch_template_image_id
+  launch_template_instance_type = var.instance_type
+
+  // ----------------------------------------------------
   // network interface block
-  network_interfaces_use = true # set to true if required; false if not required
+  network_interfaces_use = true  // set to true if required;
   network_interfaces = [
     {
       launch_template_associate_public_ip_address = false
-      launch_template_subnet_id                   = ""
-      launch_template_security_groups             = [module.ec2_launch_template_sg.vpc_security_group_output]
+      launch_template_subnet_id                   = var.subnet_id
+      launch_template_security_groups             = [var.security_groups]
     }
   ]
+
+  // ----------------------------------------------------
   // storage block
-  block_device_mappings_use = true # set to true if required; false if not required
+  block_device_mappings_use = true  // set to true if required; false if not required
   block_device_mappings = [
     {
       launch_template_volume_device_name           = "/dev/sda1"
@@ -41,9 +52,8 @@ module "ec2_launch_template" {
       launch_template_volume_encrypted             = false
     }
   ]
-  launch_template_iam_instance_profile                 = ""
-  //launch_template_instance_initiated_shutdown_behavior = ""
-  //launch_template_disable_api_termination              = ""
+  launch_template_instance_initiated_shutdown_behavior = "stop"
+  launch_template_disable_api_termination              = true
   launch_template_user_data                            = filebase64("${path.module}/user-data.sh")
 }
 ```

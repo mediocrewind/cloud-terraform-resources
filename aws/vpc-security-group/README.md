@@ -2,7 +2,7 @@
 ```
 module "aws_security_group" {
   source = "git::https://github.com/mediocrewind/cloud-terraform-resources.git//aws/vpc-security-group"
-  resource_name = var.resource_name
+  resource_name = "${var.resource_name}-${terraform.workspace == "production" ? "production" : "development"}"
   resource_tags = merge(
     var.resource_tags,
     {

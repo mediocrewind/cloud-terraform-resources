@@ -101,7 +101,7 @@ resource "aws_launch_template" "this" {
     )
   }
   iam_instance_profile {
-    arn = try(var.launch_template_iam_instance_profile, aws_iam_instance_profile.this[0])
+    arn = var.default_iam_instance_profile ? aws_iam_instance_profile.this[0].arn : var.launch_template_iam_instance_profile
   }
   instance_initiated_shutdown_behavior = var.launch_template_instance_initiated_shutdown_behavior
   disable_api_termination              = var.launch_template_disable_api_termination

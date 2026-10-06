@@ -65,7 +65,9 @@ variable "launch_template_iam_instance_profile" {
   type    = string
   default = null
 }
+
 variable "launch_template_instance_initiated_shutdown_behavior" {
+  type    = string
   default = null
 }
 

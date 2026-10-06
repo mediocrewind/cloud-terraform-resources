@@ -12,7 +12,7 @@ module "ec2_launch_template" {
   // ----------------------------------------------------
   // instance profile setting
   // set to true if desired to use module instance-profile
-  default_iam_role = false                                    // set to true to choose using module's instance-profile creation
+  default_iam_role                     = false                // set to true to choose using module's instance-profile creation
   launch_template_iam_instance_profile = var.instance_profile // include to use existing iam-instance-profile
 
   // ----------------------------------------------------
@@ -55,5 +55,8 @@ module "ec2_launch_template" {
   launch_template_instance_initiated_shutdown_behavior = "stop"
   launch_template_disable_api_termination              = true
   launch_template_user_data                            = filebase64("${path.module}/user-data.sh")
+}
+output "ec2_launch_template" {
+  value = module.ec2_launch_template
 }
 ```

@@ -59,7 +59,7 @@ resource "aws_key_pair" "this" {
 
 resource "aws_ssm_parameter" "private_key" {
   count       = var.default_key_pair ? 1 : 0
-  name        = "/{var.resource_name}/ec2-key-pair/private-key"
+  name        = "/${var.resource_name}/ec2-key-pair/private-key"
   description = "ec2 private key"
   type        = "SecureString"
   value       = tls_private_key.this[0].private_key_pem

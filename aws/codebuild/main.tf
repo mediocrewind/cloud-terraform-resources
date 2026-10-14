@@ -7,13 +7,13 @@ resource "aws_codebuild_project" "this" {
   source {
     type            = var.source_type
     location        = var.source_location
-    git_clone_depth = var.source_clone_depth != "" ? var.source_clone_depth : null
+    git_clone_depth = try(var.source_clone_depth, null)
     git_submodules_config {
-      fetch_submodules = var.source_fetch_submodules != "" ? var.source_fetch_submodules : null
+      fetch_submodules = try(var.source_fetch_submodules, null)
     }
     buildspec = var.source_buildspec
   }
-  source_version = var.source_version != "" ? var.source_version : null
+  source_version = try(var.source_version, null)
   environment {
     type                        = var.environment_type
     compute_type                = var.environment_compute_type

@@ -56,6 +56,16 @@ resource "aws_key_pair" "this" {
   key_name   = "${var.resource_name}-kp"
   public_key = tls_private_key.this[count.index].public_key_openssh
 }
+
+resource "aws_ssm_parameter" "private_key" {
+  count       = var.default_key_pair ? 1 : 0
+  name        = "/{var.resource_name}/ec2-key-pair/private-key"
+  description = "ec2 private key"
+  type        = "SecureString"
+  value       = tls_private_key.this[0].private_key_pem
+  tags        = var.resource_tags
+}
+
 resource "aws_launch_template" "this" {
   name          = "${var.resource_name}-lt"
   image_id      = var.launch_template_image_id

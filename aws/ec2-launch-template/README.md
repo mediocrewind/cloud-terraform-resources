@@ -12,7 +12,7 @@ module "ec2_launch_template" {
   // ----------------------------------------------------
   // instance profile setting
   // set to true if desired to use module instance-profile
-  default_iam_role                     = false                // set to true to choose using module's instance-profile creation
+  default_iam_instance_profile         = false                // set to true to choose using module's instance-profile creation
   launch_template_iam_instance_profile = var.instance_profile // include to use existing iam-instance-profile
 
   // ----------------------------------------------------

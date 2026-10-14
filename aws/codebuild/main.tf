@@ -1,9 +1,9 @@
 // ---------------------------------------------------------------------------------------------------------
 // codebuild project
 resource "aws_codebuild_project" "this" {
-  name          = var.resource_name
-  description   = var.description
-  tags          = var.resource_tags
+  name        = var.resource_name
+  description = var.description
+  tags        = var.resource_tags
   source {
     type            = var.source_type
     location        = var.source_location

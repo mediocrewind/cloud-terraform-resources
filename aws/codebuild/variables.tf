@@ -103,9 +103,9 @@ variable "artifacts_type" {
   default = "NO_ARTIFACTS"
 }
 
-variable "artifact_location" {}
+variable "artifacts_location" {}
 
-variable "artifact_path" {}
+variable "artifacts_path" {}
 
 variable "namespace_type" {}
 

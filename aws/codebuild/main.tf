@@ -42,8 +42,8 @@ resource "aws_codebuild_project" "this" {
   }
   artifacts {
     type           = var.artifacts_type
-    location       = var.artifacts_type == "S3" ? var.artifact_location : var.artifact_location
-    path           = var.artifacts_type == "S3" ? var.artifact_path : var.artifact_path
+    location       = var.artifacts_type == "S3" ? var.artifacts_location : var.artifact_location
+    path           = var.artifacts_type == "S3" ? var.artifacts_path : var.artifact_path
     namespace_type = var.artifacts_type == "S3" ? var.namespace_type : var.namespace_type 
   }
   dynamic logs_config {

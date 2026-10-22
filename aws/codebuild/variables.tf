@@ -109,6 +109,20 @@ variable "artifacts_path" {}
 
 variable "namespace_type" {}
 
+variable "cache_type" {
+  type    = string
+  default = "NO_CACHE"
+}
+
+variable "cache_location" {}
+
+variable "cache_modes" {}
+
+variable "cache_namespace" {
+  type    = string
+  default = null
+}
+
 variable "log_type" {
   type   = string
   default = null    

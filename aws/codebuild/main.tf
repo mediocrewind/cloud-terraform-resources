@@ -46,14 +46,12 @@ resource "aws_codebuild_project" "this" {
     path           = var.artifacts_type == "S3" ? var.artifacts_path : null
     namespace_type = var.artifacts_type == "S3" ? var.namespace_type : null
   }
-
   cache {
     type            = var.cache_type
     location        = var.cache_type == "S3" ? var.cache_location : null
     modes           = var.cache_type == "LOCAL" ? var.cache_modes : null
     cache_namespace = var.cache_namespace
   }
-
   dynamic logs_config {
     for_each = var.log_type == "cloudwatch" ? [1] : var.log_type == "s3" ? [1] : []
     content {

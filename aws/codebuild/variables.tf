@@ -132,7 +132,7 @@ variable "cache_location" {
 }
 
 variable "cache_modes" {
-  type    = string
+  type    = list
   default = null
 }
 

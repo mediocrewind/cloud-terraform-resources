@@ -49,7 +49,7 @@ resource "aws_codebuild_project" "this" {
   cache {
     type            = var.cache_type
     location        = var.cache_location
-    modes           = [var.cache_modes]
+    modes           = var.cache_modes
     cache_namespace = var.cache_namespace
   }
   dynamic "logs_config" {

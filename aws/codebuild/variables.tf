@@ -77,7 +77,7 @@ variable "environment_variables" {
 }
 
 variable "service_role" {
-  default = string
+  type = string
 }
 
 variable "build_timeout" {

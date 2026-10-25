@@ -29,9 +29,11 @@ module "codebuild" {
   service_role   = aws_iam_role.this.arn
   vpc_config_use = true   // set to true if required and set vpc_config entries;
   vpc_config     = [
-    vpc_config_vpc_id      = aws_vpc.vpc.id
-    vpc_subnets            = [aws_subnet.vpc_subnet[0]]
-    vpc_security_group_ids = [aws_security_group.this.id]    
+    {
+      vpc_config_vpc_id      = aws_vpc.vpc.id
+      vpc_subnets            = [aws_subnet.vpc_subnet[0].id]
+      vpc_security_group_ids = [aws_security_group.this.id]
+    }
   ]
   artifacts_type     = var.artifacts_type
   artifacts_location = try(var.artifacts_location, null)

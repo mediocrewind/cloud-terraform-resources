@@ -76,7 +76,9 @@ variable "environment_variables" {
   }))
 }
 
-variable "service_role" {}
+variable "service_role" {
+  default = string
+}
 
 variable "build_timeout" {
   default = 60
@@ -91,6 +93,7 @@ variable "vpc_config_use" {
 }
 
 variable "vpc_config" {
+  default = []
   type = list(object({
     vpc_config_vpc_id      = string
     vpc_subnets            = list(string)
@@ -103,20 +106,35 @@ variable "artifacts_type" {
   default = "NO_ARTIFACTS"
 }
 
-variable "artifacts_location" {}
+variable "artifacts_location" {
+  type    = string
+  default = null
+}
 
-variable "artifacts_path" {}
+variable "artifacts_path" {
+  type    = string
+  default = null  
+}
 
-variable "namespace_type" {}
+variable "namespace_type" {
+  type    = string
+  default = null  
+}
 
 variable "cache_type" {
   type    = string
   default = "NO_CACHE"
 }
 
-variable "cache_location" {}
+variable "cache_location" {
+  type    = string
+  default = null
+}
 
-variable "cache_modes" {}
+variable "cache_modes" {
+  type    = string
+  default = null
+}
 
 variable "cache_namespace" {
   type    = string

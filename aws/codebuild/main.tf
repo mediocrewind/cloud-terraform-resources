@@ -33,7 +33,7 @@ resource "aws_codebuild_project" "this" {
   build_timeout  = var.build_timeout
   queued_timeout = var.queued_timeout
   dynamic "vpc_config" {
-    for_each = var.vpc_config_use ?  var.vpc_config : []
+    for_each = var.vpc_config
     content {
       vpc_id             = vpc_config.value.vpc_config_vpc_id
       subnets            = vpc_config.value.vpc_subnets
@@ -42,17 +42,17 @@ resource "aws_codebuild_project" "this" {
   }
   artifacts {
     type           = var.artifacts_type
-    location       = var.artifacts_type == "S3" ? var.artifacts_location : null
-    path           = var.artifacts_type == "S3" ? var.artifacts_path : null
-    namespace_type = var.artifacts_type == "S3" ? var.namespace_type : null
+    location       = var.artifacts_location
+    path           = var.artifacts_path
+    namespace_type = var.namespace_type
   }
   cache {
     type            = var.cache_type
-    location        = var.cache_type == "S3" ? var.cache_location : null
-    modes           = var.cache_type == "LOCAL" ? var.cache_modes : null
+    location        = var.cache_location
+    modes           = [var.cache_modes]
     cache_namespace = var.cache_namespace
   }
-  dynamic logs_config {
+  dynamic "logs_config" {
     for_each = var.log_type == "cloudwatch" ? [1] : var.log_type == "s3" ? [1] : []
     content {
       cloudwatch_logs {

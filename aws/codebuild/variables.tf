@@ -142,11 +142,11 @@ variable "cache_namespace" {
 }
 
 variable "log_type" {
-  type   = string
+  type    = string
   default = null    
 }
 
 variable "log_s3_bucket" {
-  type   = string
+  type    = string
   default = null    
 }

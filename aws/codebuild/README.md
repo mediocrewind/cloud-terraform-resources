@@ -39,7 +39,7 @@ module "codebuild" {
   artifacts_path     = try(var.artifacts_path, null)
   namespace_type     = try(var.namespace_type, null)
   cache_type         = var.cache_type
-  cache_location     = var.cache_type == "D3" ? var.cache_location : null
+  cache_location     = var.cache_type == "S3" ? var.cache_location : null
   cache_modes        = var.cache_type == "LOCAL" ? var.cache_modes : null
   cache_namespace    = try(each.value.cache_namespace, null)
   log_type           = var.log_type
